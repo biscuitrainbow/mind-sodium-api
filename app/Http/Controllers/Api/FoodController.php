@@ -10,7 +10,7 @@ use function foo\func;
 
 class FoodController extends ApiController
 {
-    public function searchFatsecret(Request $request)
+    public function search(Request $request)
     {
         $q = $request->q;
 

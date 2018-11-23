@@ -22,8 +22,14 @@ class User extends Authenticatable
         'pivot', 'password', 'remember_token', 'created_at', 'updated_at',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'date_time'
+    ];
+
     public function foodEntries()
     {
-        return $this->belongsToMany(Food::class, 'users_has_foods', 'user_id', 'food_id')->withPivot(['serving', 'total_sodium','date_time']);
+        return $this->belongsToMany(Food::class, 'users_has_foods', 'user_id', 'food_id')->withPivot(['serving', 'total_sodium', 'date_time']);
     }
 }

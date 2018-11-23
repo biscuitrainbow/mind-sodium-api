@@ -9,6 +9,7 @@ use Carbon\Carbon;
 
 class EntryController extends ApiController
 {
+
     public function store(Request $request)
     {
 
@@ -33,12 +34,11 @@ class EntryController extends ApiController
         $date = $request->date;
         $user = auth()->user();
 
-        $entries;
 
         if ($request->filled('date')) {
-            $entries = $user->foodEntries()->whereDate('date_time', $date)->get();
+            $entries = $user->foodEntries()->whereDate('date_time', $date)->orderBy('date_time')->get();
         } else {
-            $entries = $user->foodEntries;
+            $entries = $user->foodEntries()->orderBy('date_time')->get();
         }
 
         $entries = $entries->map(function ($entry) {
@@ -49,6 +49,68 @@ class EntryController extends ApiController
             return $entry;
         });
 
-        return $this->respond($entries);
+
+        return $deceedEntries = $this->toDateGroupedEntries($entries)->where('excess', false)->values();
+
+
+        //return $this->respond($entries);
     }
+
+    public function dategrouped(Request $request)
+    {
+        $user = auth()->user();
+
+        $entries = $user->foodEntries()->orderBy('date_time')->get();
+        $entries = $entries->map(function ($entry) {
+            $entry->serving = $entry->pivot->serving;
+            $entry->total_sodium = $entry->pivot->total_sodium;
+            $entry->date_time = $entry->pivot->date_time;
+
+            return $entry;
+        });
+
+
+        $dateGroupedEntries = $this->toDateGroupedEntries($entries);
+
+        return $this->respond($dateGroupedEntries);
+    }
+
+    private function toDateGroupedEntries($entries)
+    {
+        $user = auth()->user();
+
+        $dateGroupedEntries = $entries->groupBy(function ($item, $key) {
+            return $item->date_time->toDateString();
+        });
+
+        $dateGroupedEntries = $dateGroupedEntries->map(function ($et, $key) use ($user) {
+            $total_sodium = $et->reduce(function ($accumulate, $entry) use ($user) {
+                return $accumulate + $entry->total_sodium;
+            });
+
+
+            return [
+                'date' => $key,
+                'total_sodium' => $total_sodium,
+                'excess' => $total_sodium > $user->sodium_limit
+            ];
+        });
+
+        $entries = collect();
+        $dateGroupedEntries->each(function ($item) use ($entries) {
+            $entries->push($item);
+        });
+
+        return $entries;
+    }
+
+    private function toDeeceedEntries($entries)
+    {
+        $dateGroupedEntries = $this->toDateGroupedEntries($entries);
+        $entries = $entries->where('excess', false)->values();
+
+        return $entries;
+    }
+
+
 }

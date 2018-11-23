@@ -29,7 +29,7 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::post('entry', 'EntryController@store');
         Route::get('entry', 'EntryController@index');
-
+        Route::get('entry/dategrouped', 'EntryController@dategrouped');
 
     });
 });

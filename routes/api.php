@@ -28,8 +28,17 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('food/fatsecret/{food}', 'FoodController@detailFatsecret');
 
         Route::post('entry', 'EntryController@store');
-        Route::get('entry', 'EntryController@index');
+        Route::get('entry', 'EntryController@userEntries');
         Route::get('entry/dategrouped', 'EntryController@dategrouped');
+
+        Route::get('achievement', 'AchievementController@userAchievements');
+        Route::get('achievement/unlock', 'AchievementController@unlock');
+
+        Route::get('mentalhealth', 'MentalHealthController@userMentalHealths');
+        Route::post('mentalhealth', 'MentalHealthController@store');
+
+        Route::get('seasoning', 'SeasoningController@index');
+
 
     });
 });

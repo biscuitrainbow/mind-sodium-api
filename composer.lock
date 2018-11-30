@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a52431dc7390d0e15de7a6f867fab79",
+    "content-hash": "dc663a26fc4f4fcefb55a4974139f715",
     "packages": [
         {
             "name": "braunson/fatsecret-laravel",
@@ -520,6 +520,50 @@
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
             "time": "2017-06-27T22:17:23+00:00"
+        },
+        {
+            "name": "gstt/laravel-achievements",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gstt/laravel-achievements.git",
+                "reference": "7807592a70bde10fb960d7ef75b625613a1d0050"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gstt/laravel-achievements/zipball/7807592a70bde10fb960d7ef75b625613a1d0050",
+                "reference": "7807592a70bde10fb960d7ef75b625613a1d0050",
+                "shasum": ""
+            },
+            "require": {
+                "ramsey/uuid": "^3.5"
+            },
+            "require-dev": {
+                "laravel/laravel": "^5.3",
+                "phpunit/phpunit": "^5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/Migrations"
+                ],
+                "psr-4": {
+                    "Gstt\\Achievements\\": "src/",
+                    "Gstt\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gabriel Simonetti",
+                    "email": "simonettigo@gmail.com"
+                }
+            ],
+            "description": "Achievements for Laravel 5.3+",
+            "time": "2017-03-08T03:42:08+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

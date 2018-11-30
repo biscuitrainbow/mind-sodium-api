@@ -15,7 +15,7 @@ class FoodController extends ApiController
         $q = $request->q;
 
         $fatSecretFoods = FatSecret::searchIngredients($q, 1, 50);
-
+        
         if ($fatSecretFoods['foods']['total_results'] == 0) {
             $fatSecretFoods = collect();
         } else {
@@ -34,6 +34,7 @@ class FoodController extends ApiController
             $food->type = 'อาหารไทย';
             return $food;
         });
+
         $foods = $fatSecretFoods->merge($localFood);
 
         return $this->respond($foods);
@@ -41,6 +42,8 @@ class FoodController extends ApiController
 
     public function detailFatsecret(Request $request, $food)
     {
-        return FatSecret::getIngredient($food);
+        $food = FatSecret::getIngredient($food);
+
+        return $this->respond($food);
     }
 }

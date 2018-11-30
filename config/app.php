@@ -174,6 +174,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Braunson\FatSecret\FatSecretServiceProvider::class,
+        Gstt\Achievements\AchievementsServiceProvider::class,
 
     ],
 

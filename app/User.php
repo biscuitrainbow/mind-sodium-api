@@ -44,6 +44,11 @@ class User extends Authenticatable
 
     public function mentalHealths()
     {
-        return $this->hasMany(MentalHealth::class,'user_id');
+        return $this->hasMany(MentalHealth::class, 'user_id');
+    }
+
+    public function foods()
+    {
+        return $this->hasMany(Food::class, 'user_id');
     }
 }

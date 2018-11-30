@@ -24,6 +24,9 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('user', 'UserController@detail');
         Route::put('user', 'UserController@update');
 
+
+        Route::post('food/', 'FoodController@store');
+        Route::get('food/', 'FoodController@index');
         Route::get('food/fatsecret', 'FoodController@search');
         Route::get('food/fatsecret/{food}', 'FoodController@detailFatsecret');
 

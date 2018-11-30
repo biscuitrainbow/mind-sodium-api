@@ -10,12 +10,37 @@ use function foo\func;
 
 class FoodController extends ApiController
 {
+    public function index()
+    {
+        $user = auth()->user();
+        $foods = $user->foods;
+
+        return $this->respond($foods);
+    }
+
+
+    public function store(Request $request)
+    {
+        $food = new Food([
+            'name' => $request->food_name,
+            'sodium' => $request->food_sodium,
+            'is_local' => (float)1,
+            'type' => $request->food_type,
+        ]);
+
+        $user = auth()->user();
+        $user->foods()->save($food);
+
+        return $this->respondSuccess();
+    }
+
+
     public function search(Request $request)
     {
         $q = $request->q;
 
         $fatSecretFoods = FatSecret::searchIngredients($q, 1, 50);
-        
+
         if ($fatSecretFoods['foods']['total_results'] == 0) {
             $fatSecretFoods = collect();
         } else {

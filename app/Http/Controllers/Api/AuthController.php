@@ -56,6 +56,8 @@ class AuthController extends ApiController
             'password' => bcrypt(request()->password),
         ]);
 
+        $user = User::find($user->id);
+
         $token = $user->createToken('Sodium')->accessToken;
         $user->token = $token;
 

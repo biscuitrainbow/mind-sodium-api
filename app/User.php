@@ -13,12 +13,17 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, Achiever;
 
-    protected $casts = ['is_admin' => 'bool'];
+    protected $casts = ['is_admin' => 'bool', 'serving' => 'float', 'is_new_user' => 'bool'];
 
     protected $fillable = [
         'name',
         'email',
         'password',
+        'gender',
+        'date_of_birth',
+        'health_condition',
+        'sodium_limit',
+        'is_new_user'
     ];
 
 
@@ -50,5 +55,15 @@ class User extends Authenticatable
     public function foods()
     {
         return $this->hasMany(Food::class, 'user_id');
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class, 'user_id');
+    }
+
+    public function bloodPressures()
+    {
+        return $this->hasMany(BloodPressure::class, 'user_id');
     }
 }

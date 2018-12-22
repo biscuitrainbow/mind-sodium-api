@@ -21,17 +21,15 @@ class UserController extends ApiController
 
     public function update(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:3|',
-            'gender' => ['required', Rule::in(['หญิง', 'ชาย', 'ไม่ระบุ'])],
-        ]);
 
         $user = auth()->user();
         $user->update([
             'name' => $request->name,
             'gender' => $request->gender,
-            'tel' => $request->tel,
-            'date_of_birth' => $request->date_of_birth,
+            'date_of_birth' => $request->date_of_birth != 'null' ? $request->date_of_birth : null,
+            'health_condition' => $request->health_condition,
+            'sodium_limit' => $request->sodium_limit,
+            'is_new_user' => $request->is_new_user,
         ]);
 
         return $this->respondSuccess();

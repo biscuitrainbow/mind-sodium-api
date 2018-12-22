@@ -33,7 +33,7 @@ class EntryService
             [
                 'serving' => $request->serving,
                 'total_sodium' => $request->total_sodium,
-                'date_time' => Carbon::now()
+                'date_time' => $request->date_time,
             ]
         );
     }
@@ -49,7 +49,7 @@ class EntryService
 
         $entries = $user->foodEntries()->orderBy('date_time')->get();
         $entries = $entries->map(function ($entry) {
-            $entry->serving = $entry->pivot->serving;
+            (float)$entry->serving = $entry->pivot->serving;
             $entry->total_sodium = $entry->pivot->total_sodium;
             $entry->date_time = $entry->pivot->date_time;
 

@@ -42,6 +42,15 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::get('seasoning', 'SeasoningController@index');
 
+        Route::get('news', 'NewsController@index');
+        Route::post('news', 'NewsController@store');
+        Route::put('news/{news}', 'NewsController@update');
+        Route::delete('news/{news}', 'NewsController@destroy');
+
+        Route::get('bloodpressure', 'BloodPressureController@index');
+        Route::post('bloodpressure', 'BloodPressureController@store');
+        Route::put('bloodpressure/{bloodPressure}', 'BloodPressureController@update');
+        Route::delete('bloodpressure/{bloodPressure}', 'BloodPressureController@destroy');
 
     });
 });

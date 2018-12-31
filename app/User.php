@@ -44,7 +44,7 @@ class User extends Authenticatable
     public function foodEntries()
     {
         return $this->belongsToMany(Food::class, 'users_has_foods', 'user_id', 'food_id')
-            ->withPivot(['serving', 'total_sodium', 'date_time']);
+            ->withPivot(['serving', 'total_sodium', 'date_time', 'id']);
     }
 
     public function mentalHealths()

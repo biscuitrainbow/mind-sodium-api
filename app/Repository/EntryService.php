@@ -52,6 +52,7 @@ class EntryService
             (float)$entry->serving = $entry->pivot->serving;
             $entry->total_sodium = $entry->pivot->total_sodium;
             $entry->date_time = $entry->pivot->date_time;
+            $entry->entry_id = $entry->pivot->id;
 
             return $entry;
         });

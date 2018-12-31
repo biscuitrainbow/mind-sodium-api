@@ -14,6 +14,7 @@ use App\User;
 use App\Achievements\TotalSodiumBalancing15Days;
 use App\Achievements\TotalSodiumBalancing30Days;
 use App\Repository\EntryService;
+use App\Entry;
 
 
 class EntryController extends ApiController
@@ -29,6 +30,8 @@ class EntryController extends ApiController
     public function store(Request $request)
     {
         $this->entryService->store($request);
+
+        return $this->respondSuccess();
     }
 
 
@@ -44,5 +47,12 @@ class EntryController extends ApiController
         $entries = $this->entryService->userEntries();
 
         return $this->respond($entries);
+    }
+
+    public function destroy(Entry $entry)
+    {
+        $entry->delete();
+
+        return $this->respondSuccess();
     }
 }

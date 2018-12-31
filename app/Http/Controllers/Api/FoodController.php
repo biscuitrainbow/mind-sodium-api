@@ -71,4 +71,12 @@ class FoodController extends ApiController
 
         return $this->respond($food);
     }
+
+
+    public function destroy(Food $food)
+    {
+        $food->delete();
+
+        return $this->respondSuccess();
+    }
 }

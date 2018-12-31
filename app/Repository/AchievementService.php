@@ -70,24 +70,15 @@ class AchievementService
         $unlocked = false;
         $achievement = null;
 
-        if ($deceedDays >= 3) {
-            $status = $user->achievementStatus(new TotalSodiumBalancing3Days());
+
+        if ($deceedDays >= 30) {
+            $status = $user->achievementStatus(new TotalSodiumBalancing30Days());
 
             if (is_null($status->unlocked_at)) {
-                $user->unlock(new TotalSodiumBalancing3Days());
+                $user->unlock(new TotalSodiumBalancing30Days());
 
                 $unlocked = true;
-                $achievement = $user->achievementStatus(new TotalSodiumBalancing3Days());
-            }
-
-        } else if ($deceedDays >= 7) {
-            $status = $user->achievementStatus(new TotalSodiumBalancing7Days());
-
-            if (is_null($status->unlocked_at)) {
-                $user->unlock(new TotalSodiumBalancing7Days());
-
-                $unlocked = true;
-                $achievement = $user->achievementStatus(new TotalSodiumBalancing7Days());
+                $achievement = $user->achievementStatus(new TotalSodiumBalancing30Days());
             }
         } else if ($deceedDays >= 15) {
             $status = $user->achievementStatus(new TotalSodiumBalancing15Days());
@@ -98,16 +89,29 @@ class AchievementService
                 $unlocked = true;
                 $achievement = $user->achievementStatus(new TotalSodiumBalancing15Days());
             }
-        } else if ($deceedDays >= 30) {
-            $status = $user->achievementStatus(new TotalSodiumBalancing30Days());
+        } else if ($deceedDays >= 7) {
+            $status = $user->achievementStatus(new TotalSodiumBalancing7Days());
 
             if (is_null($status->unlocked_at)) {
-                $user->unlock(new TotalSodiumBalancing30Days());
+                $user->unlock(new TotalSodiumBalancing7Days());
 
                 $unlocked = true;
-                $achievement = $user->achievementStatus(new TotalSodiumBalancing30Days());
+                $achievement = $user->achievementStatus(new TotalSodiumBalancing7Days());
             }
+
+        } else if ($deceedDays >= 3) {
+            $status = $user->achievementStatus(new TotalSodiumBalancing3Days());
+
+            if (is_null($status->unlocked_at)) {
+                $user->unlock(new TotalSodiumBalancing3Days());
+
+                $unlocked = true;
+                $achievement = $user->achievementStatus(new TotalSodiumBalancing3Days());
+            }
+
         }
+
+
 
         if (!is_null($achievement)) {
             $achievement->name = Achievement::find($achievement->achievement_id)->name;

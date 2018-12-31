@@ -29,10 +29,12 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('food/', 'FoodController@index');
         Route::get('food/fatsecret', 'FoodController@search');
         Route::get('food/fatsecret/{food}', 'FoodController@detailFatsecret');
+        Route::delete('food/{food}', 'FoodController@destroy');
 
         Route::post('entry', 'EntryController@store');
         Route::get('entry', 'EntryController@userEntries');
         Route::get('entry/dategrouped', 'EntryController@dategrouped');
+        Route::delete('entry/{entry}', 'EntryController@destroy');
 
         Route::get('achievement', 'AchievementController@userAchievements');
         Route::get('achievement/unlock', 'AchievementController@unlock');

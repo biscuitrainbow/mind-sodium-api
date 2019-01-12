@@ -59,7 +59,7 @@ class EntryService
 
     public function userEntries()
     {
-         $user = auth()->user();
+        $user = auth()->user();
 
         // $entries = $user->entries()->orderBy('date_time', 'desc')->get();
         // $entries = $entries->each(function ($entry) {
@@ -69,14 +69,14 @@ class EntryService
         //     });
         // });
 
-      
+
         $entries = $user->foodEntries()->orderBy('date_time')->get();
         $entries = $entries->map(function ($entry) {
             (float)$entry->serving = $entry->pivot->serving;
             $entry->total_sodium = $entry->pivot->total_sodium;
             $entry->date_time = $entry->pivot->date_time;
             $entry->entry_id = $entry->pivot->id;
-          
+
 
             return $entry;
         });

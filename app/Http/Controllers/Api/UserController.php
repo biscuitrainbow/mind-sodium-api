@@ -30,6 +30,7 @@ class UserController extends ApiController
             'health_condition' => $request->health_condition,
             'sodium_limit' => $request->sodium_limit,
             'is_new_user' => $request->is_new_user,
+            'enable_notification' => $request->enable_notification,
         ]);
 
         return $this->respondSuccess();

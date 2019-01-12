@@ -34,6 +34,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('entry', 'EntryController@store');
         Route::get('entry', 'EntryController@userEntries');
         Route::get('entry/dategrouped', 'EntryController@dategrouped');
+        Route::put('entry/{entry}', 'EntryController@update');
         Route::delete('entry/{entry}', 'EntryController@destroy');
 
         Route::get('achievement', 'AchievementController@userAchievements');
@@ -43,6 +44,9 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('mentalhealth', 'MentalHealthController@store');
 
         Route::get('seasoning', 'SeasoningController@index');
+
+        Route::get('seasoningunit', 'SeasoningUnitController@index');
+
 
         Route::get('news', 'NewsController@index');
         Route::post('news', 'NewsController@store');

@@ -10,7 +10,7 @@ class BloodPressureController extends ApiController
     public function index()
     {
         $user = auth()->user();
-        $bloodPressures = $user->bloodPressures()->orderBy('date_time','desc')->get();
+        $bloodPressures = $user->bloodPressures()->orderBy('date_time', 'desc')->get();
 
         return $this->respond($bloodPressures);
     }
@@ -22,7 +22,7 @@ class BloodPressureController extends ApiController
         $createdBloodPressure = $user->bloodPressures()->save(new BloodPressure([
             'systolic' => $request->systolic,
             'diastolic' => $request->diastolic,
-
+            'date_time' => $request->date_time
         ]));
 
         return $this->respondCreated($createdBloodPressure);
@@ -33,6 +33,7 @@ class BloodPressureController extends ApiController
         $bloodPressure->update([
             'systolic' => $request->systolic,
             'diastolic' => $request->diastolic,
+            'date_time' => $request->date_time
         ]);
 
         return $this->respondSuccess();
@@ -45,3 +46,4 @@ class BloodPressureController extends ApiController
         return $this->respondSuccess();
     }
 }
+

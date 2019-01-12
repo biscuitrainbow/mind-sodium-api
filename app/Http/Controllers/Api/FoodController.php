@@ -21,7 +21,7 @@ class FoodController extends ApiController
 
     public function store(Request $request)
     {
-        $food = new Food([
+        $storedFood = new Food([
             'name' => $request->food_name,
             'sodium' => $request->food_sodium,
             'is_local' => (float)1,
@@ -29,9 +29,11 @@ class FoodController extends ApiController
         ]);
 
         $user = auth()->user();
-        $user->foods()->save($food);
+        $user->foods()->save($storedFood);
 
-        return $this->respondSuccess();
+        $respondFood = Food::find($storedFood->id);
+
+        return $this->respond($respondFood);
     }
 
 
@@ -64,6 +66,7 @@ class FoodController extends ApiController
 
         return $this->respond($foods);
     }
+
 
     public function detailFatsecret(Request $request, $food)
     {

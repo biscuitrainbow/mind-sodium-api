@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seasoning extends Model
 {
-    //
+    protected $hidden = ['pivot'];
+
+
 }

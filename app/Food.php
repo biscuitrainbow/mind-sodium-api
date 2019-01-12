@@ -15,4 +15,10 @@ class Food extends Model
         'updated_at',
         'date_time'
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

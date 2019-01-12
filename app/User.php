@@ -13,7 +13,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, Achiever;
 
-    protected $casts = ['is_admin' => 'bool', 'serving' => 'float', 'is_new_user' => 'bool'];
+    protected $casts = ['is_admin' => 'bool', 'serving' => 'float', 'is_new_user' => 'bool', 'enable_notification' => 'bool', ];
 
     protected $fillable = [
         'name',
@@ -23,7 +23,8 @@ class User extends Authenticatable
         'date_of_birth',
         'health_condition',
         'sodium_limit',
-        'is_new_user'
+        'is_new_user',
+        'enable_notification',
     ];
 
 
@@ -43,8 +44,16 @@ class User extends Authenticatable
 
     public function foodEntries()
     {
-        return $this->belongsToMany(Food::class, 'users_has_foods', 'user_id', 'food_id')
+        return $this->belongsToMany(Food::class, 'entries', 'user_id', 'food_id')
             ->withPivot(['serving', 'total_sodium', 'date_time', 'id']);
+    }
+
+    public function entries()
+    {
+        return $this->hasMany(Entry::class, 'user_id');
+            //->withPivot(['serving', 'total_sodium', 'date_time', 'id']);
+
+
     }
 
     public function mentalHealths()

@@ -34,6 +34,14 @@ class EntryController extends ApiController
         return $this->respondSuccess();
     }
 
+    public function update(Request $request, Entry $entry)
+    {
+
+        $this->entryService->update($request, $entry);
+
+        return $this->respondSuccess();
+    }
+
 
     public function index(Request $request)
     {

@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\Food;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Entry;
+use App\Seasoning;
+use App\SeasoningUnits;
+use DeepCopy\f003\Foo;
 
 class EntryService
 {
@@ -38,6 +42,16 @@ class EntryService
         );
     }
 
+
+    public function update(Request $request, Entry $entry)
+    {
+        $entry->update([
+            'serving' => $request->serving,
+            'total_sodium' => $request->total_sodium,
+            'date_time' => $request->date_time,
+        ]);
+    }
+
     public function index()
     {
         return $this->model::all();
@@ -45,14 +59,24 @@ class EntryService
 
     public function userEntries()
     {
-        $user = auth()->user();
+         $user = auth()->user();
 
+        // $entries = $user->entries()->orderBy('date_time', 'desc')->get();
+        // $entries = $entries->each(function ($entry) {
+        //     $entry->food = Food::find($entry->food_id);
+        //     $entry->seasonings = $entry->seasonings->each(function ($seasoning) {
+        //         $seasoning->unit = SeasoningUnits::find($seasoning->unit);
+        //     });
+        // });
+
+      
         $entries = $user->foodEntries()->orderBy('date_time')->get();
         $entries = $entries->map(function ($entry) {
             (float)$entry->serving = $entry->pivot->serving;
             $entry->total_sodium = $entry->pivot->total_sodium;
             $entry->date_time = $entry->pivot->date_time;
             $entry->entry_id = $entry->pivot->id;
+          
 
             return $entry;
         });

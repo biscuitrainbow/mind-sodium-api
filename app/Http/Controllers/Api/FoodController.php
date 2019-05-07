@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use FatSecret;
 use App\Food;
-use function foo\func;
+use FatSecret;
+use Illuminate\Http\Request;
 
 class FoodController extends ApiController
 {
@@ -18,13 +16,12 @@ class FoodController extends ApiController
         return $this->respond($foods);
     }
 
-
     public function store(Request $request)
     {
         $storedFood = new Food([
             'name' => $request->food_name,
             'sodium' => $request->food_sodium,
-            'is_local' => (float)1,
+            'is_local' => (float) 1,
             'type' => $request->food_type,
         ]);
 
@@ -35,7 +32,6 @@ class FoodController extends ApiController
 
         return $this->respond($respondFood);
     }
-
 
     public function search(Request $request)
     {
@@ -48,7 +44,7 @@ class FoodController extends ApiController
         } else {
             $fatSecretFoods = collect($fatSecretFoods['foods']['food']);
             $fatSecretFoods = $fatSecretFoods->map(function ($food) {
-                $modifiedFood['id'] = (int)$food['food_id'];
+                $modifiedFood['id'] = (int) $food['food_id'];
                 $modifiedFood['name'] = $food['food_name'];
                 $modifiedFood['is_local'] = false;
                 $modifiedFood['type'] = 'ทั่วไป';
@@ -56,7 +52,9 @@ class FoodController extends ApiController
             });
         }
 
-        $localFood = Food::where('name', 'like', '%' . $q . '%')->get();
+        $localFood = Food::where('name', 'like', '%' . $q . '%')
+            ->orWhere('category', 'like', '%' . $q . '%')
+            ->get();
         $localFood = $localFood->map(function ($food) {
             $food->type = 'อาหารไทย';
             return $food;
@@ -67,14 +65,12 @@ class FoodController extends ApiController
         return $this->respond($foods);
     }
 
-
     public function detailFatsecret(Request $request, $food)
     {
         $food = FatSecret::getIngredient($food);
 
         return $this->respond($food);
     }
-
 
     public function destroy(Food $food)
     {
